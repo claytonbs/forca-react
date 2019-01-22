@@ -1,27 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Navbar.css';
 
-class Navbar extends Component {
-    
-    
-   
-    
-    render() {
+const Navbar = props => {
         
-        
-       
-        
-        return (
-            
-                <nav>
-                    <button id = "btnStart" onClick = {this.props.onNewGame}>Novo jogo</button>
-                </nav>
-            
-                );
-    }
+            return (
+                
+                    <nav>  
+                        <button id = "btnStart" onClick = {props.onNewGame}>Novo jogo</button>
+                    </nav>
+                
+                    );
+        };
     
     
-}
+
 
 export default Navbar;
 
