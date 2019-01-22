@@ -16,6 +16,10 @@ class Forca extends Component {
     state = {
 		campoValue: "",
 		wordsList: ["dog", "beeeer", "apple"],
+		wordsList2: [{word: 'cachorro', hint: 'Um animal'},
+		            {word: 'cerveja', hint: 'Uma bebida'},
+		            {word: 'abacate', hint: 'Uma fruta'}
+		    ],
 		choosedWord: "",
 		choosedWordSplitted: [],
 		traces: [],
@@ -24,6 +28,7 @@ class Forca extends Component {
 		points: 0,
 		mistakes: 0,
 		message: "Chute uma letra:",
+		dica: "Jogo da Forca",
 		isRunning: false
 	}
     
@@ -38,7 +43,7 @@ class Forca extends Component {
 			this.setState(this.stateReset, ()=>{
     			let tempTraces = [];
     			let randomNumber = Math.floor(Math.random() * 3);
-    			this.setState({choosedWord: this.state.wordsList[randomNumber], isRunning: true}, () =>{
+    			this.setState({choosedWord: this.state.wordsList2[randomNumber].word, dica: this.state.wordsList2[randomNumber].hint, isRunning: true}, () =>{
     
     				this.setState({choosedWordSplitted: this.state.choosedWord.split("")}, () => {
     
@@ -57,7 +62,7 @@ class Forca extends Component {
 		
 		
 	handleCheckGuess = () => {
-	    this.setState({charGuessed: document.getElementById('guess').value}, ()=>{
+	    this.setState({charGuessed: document.getElementById('guess').value.toLowerCase()}, ()=>{
 			document.getElementById('guess').value = "";
 			
 			if (this.checkUsed()){
@@ -69,7 +74,7 @@ class Forca extends Component {
 					if (this.state.charGuessed === key) {
 						computedPoints++;
 						
-						newTraces[index] = this.state.charGuessed
+						newTraces[index] = this.state.charGuessed + " ";
 
 
 						//let newTraces = this.state.traces.map((keyMap,indexMap)=>{return index == indexMap ? this.state.charGuessed : keyMap;})
@@ -100,7 +105,7 @@ class Forca extends Component {
 	    
 	    if (this.state.points >= this.state.choosedWordSplitted.length){
 				this.setState({message: "Você venceu!"});
-				   document.getElementById('head').style.visibility = "hidden";
+				   //document.getElementById('head').style.visibility = "hidden";
 				document.getElementById('guess').disabled = true;
 				   
 		        
@@ -149,7 +154,7 @@ class Forca extends Component {
         return (
             <div>
                 <Navbar onNewGame={this.handleNewGame} />
-                <h1>Jogo da Forca</h1>
+                <h1>{this.state.dica}</h1>
                 <Hangman ref={ref => this.child = ref} />
                 <Traces word= {this.state.traces}/>
                 {this.state.isRunning &&<Message message = {this.state.message}/>}
