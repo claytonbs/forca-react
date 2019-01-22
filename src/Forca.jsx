@@ -62,9 +62,10 @@ class Forca extends Component {
 		
 		
 	handleCheckGuess = () => {
-	    this.setState({charGuessed: document.getElementById('guess').value.toLowerCase()}, ()=>{
-			document.getElementById('guess').value = "";
-			
+	    let char = document.getElementById('guess').value;
+	    this.setState({charGuessed: char.toLowerCase().charAt(char.length-1)}, ()=>{
+			document.getElementById('guess').value = null;
+		
 			if (this.checkUsed()){
 				let computedPoints = 0;
 				let newTraces = this.state.traces;

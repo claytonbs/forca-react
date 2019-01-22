@@ -4,7 +4,7 @@ class Used extends Component {
     render(){
         
         return(
-            <p>Letters alread used: <span> {  this.props.charUsed.join() }  </span></p>
+            <p>Letras já usadas: <span> {  this.props.charUsed.join() }  </span></p>
         )
         
     }   
