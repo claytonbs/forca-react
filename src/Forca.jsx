@@ -13,12 +13,14 @@ import Hangman from './components/Hangman';
 class Forca extends Component {
     
     
-    state = {
+		state = {
 		campoValue: "",
 		wordsList: ["dog", "beeeer", "apple"],
 		wordsList2: [{word: 'cachorro', hint: 'Um animal'},
 		            {word: 'cerveja', hint: 'Uma bebida'},
-		            {word: 'abacate', hint: 'Uma fruta'}
+		            {word: 'abacate', hint: 'Uma fruta'},
+		            {word: 'pindamonhangaba', hint: 'Uma cidade'},
+		            {word: 'wando', hint: 'Um cantor'}
 		    ],
 		choosedWord: "",
 		choosedWordSplitted: [],
@@ -30,8 +32,10 @@ class Forca extends Component {
 		message: "Chute uma letra:",
 		dica: "Jogo da Forca",
 		isRunning: false
-	}
-    
+	};
+  
+  
+	
     
     stateReset = this.state;
     
@@ -42,7 +46,7 @@ class Forca extends Component {
 		    	
 			this.setState(this.stateReset, ()=>{
     			let tempTraces = [];
-    			let randomNumber = Math.floor(Math.random() * 3);
+    			let randomNumber = Math.floor(Math.random() * this.state.wordsList2.length);
     			this.setState({choosedWord: this.state.wordsList2[randomNumber].word, dica: this.state.wordsList2[randomNumber].hint, isRunning: true}, () =>{
     
     				this.setState({choosedWordSplitted: this.state.choosedWord.split("")}, () => {
@@ -77,11 +81,6 @@ class Forca extends Component {
 						
 						newTraces[index] = this.state.charGuessed + " ";
 
-
-						//let newTraces = this.state.traces.map((keyMap,indexMap)=>{return index == indexMap ? this.state.charGuessed : keyMap;})
-
-						
-				
 						this.setState({points: this.state.points + computedPoints, message: "Você acertou!", traces: newTraces }, () => {this.checkStatus()});
 					}		
 			
@@ -104,23 +103,19 @@ class Forca extends Component {
 	    });
 	}
 	
-	
+	// checa se o jogador ganhou ou perder
 	checkStatus = () => {
 	    
 	    
 	    if (this.state.points >= this.state.choosedWordSplitted.length){
 				this.setState({message: "Você venceu!"});
-				   //document.getElementById('head').style.visibility = "hidden";
 				document.getElementById('guess').disabled = true;
-				   
-		        
-			}
+		}
 
-			if (this.state.mistakes >= 6){
-				this.setState({message: "você perdeu!"});
-				document.getElementById('guess').disabled = true;
-				 
-			}
+		if (this.state.mistakes >= 6){
+			this.setState({message: "você perdeu!"});
+			document.getElementById('guess').disabled = true;
+		}
 	};
 	
 		
@@ -129,35 +124,26 @@ class Forca extends Component {
 	    
 	
     
-    
+    // checa se uma letra já foi usada
 		checkUsed = () => {
 			for (var temp = 0; temp< this.state.charUsed.length; temp++ ){
 				if (this.state.charUsed[temp] === this.state.charGuessed) {
-				this.setState({message: "Essa letra já foi utilizada."})
-
-				return false;
+					this.setState({message: "Essa letra já foi utilizada."});
+					return false;
 				}
-				
-
+			
 			}
 
-			this.setState({charUsed: [...this.state.charUsed, this.state.charGuessed]})
-			// this.state.charUsed.push(this.state.charGuessed);
-			console.log(this.state.charUsed);
+			this.setState({charUsed: [...this.state.charUsed, this.state.charGuessed]});
 			return true;	
 		}
     
     
     render(){
         
-          
-         
-        console.log(this.state.points, this.state.mistakes);
-       
-        
         
         return (
-            <div>
+            <React.Fragment>
                 <Navbar onNewGame={this.handleNewGame} />
                 <h1>{this.state.dica}</h1>
                 <Hangman mistakes={this.state.mistakes} ref={ref => this.child = ref} />
@@ -165,16 +151,12 @@ class Forca extends Component {
                 {this.state.isRunning && <Message message = {this.state.message}/>}
                 {this.state.isRunning && <InputBox onHandleCheckGuess = {this.handleCheckGuess} />}
                 {this.state.isRunning && <Used charUsed = {this.state.charUsed} />}
-                
-            </div>
-            );
+            </React.Fragment>
+        );
     
-     
-        
     }
-    
-    
-    
+
+	
 }
 
 
