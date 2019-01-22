@@ -1,0 +1,19 @@
+nav {
+  background-color: purple;
+  margin-top: 10px;
+}
+
+nav button {
+  outline: none;
+  margin-left: 20px;
+  background-color: purple;
+  color: white;
+  
+  border: none;
+  height: 25px;
+}
+
+nav button:hover {
+  background-color: black;
+  cursor: pointer;
+}

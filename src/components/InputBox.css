@@ -1,0 +1,12 @@
+  #guess {
+  
+    font-family: 'Inconsolata', monospace;
+  position: relative;
+    margin-left: 10px;
+    height: 130px;
+    width: 130px;
+    font-size: 140px;
+    background-color: #1A1A1D;
+    color: white;
+    
+  }
