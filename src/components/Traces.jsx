@@ -17,4 +17,4 @@ class Traces extends Component {
 }
 
 
-export default Traces
+export default Traces;

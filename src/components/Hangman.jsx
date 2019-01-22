@@ -15,7 +15,6 @@ class Hangman extends Component {
 			{name: "<RightLeg />", id: 5, visible: false},
 			{name: "<Leftleg/>", id: 6, visible: false}
 		],
-	mistakes: 0
 
 	};
 	
@@ -25,7 +24,12 @@ class Hangman extends Component {
     handleBoneco = () => {
           // this.setState({boneco: this.state.boneco.map((key)=> key.id <= this.state.mistakes ? {...key, visible: true} : key)});
            //console.log(this.state.mistakes)
-      this.setState({mistakes: this.state.mistakes + 1},() => this.setState({boneco: this.state.boneco.map((key)=> key.id <= this.state.mistakes ? {...key, visible: true} : key)}) );
+     // this.setState({mistakes: this.state.mistakes + 1},() => this.setState({boneco: this.state.boneco.map((key)=> key.id <= this.state.mistakes ? {...key, visible: true} : key)}) );
+     
+     
+     console.log(this.props.mistakes)
+      this.setState({boneco: this.state.boneco.map((key)=> key.id <= this.props.mistakes ? {...key, visible: true} : key)});
+     
         
     }
     

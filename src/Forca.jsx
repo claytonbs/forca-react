@@ -39,7 +39,7 @@ class Forca extends Component {
     handleNewGame = () =>{
                  
                  this.child.resetBoneco();
-		    	document.getElementById('guess').disabled = false;
+		    	
 			this.setState(this.stateReset, ()=>{
     			let tempTraces = [];
     			let randomNumber = Math.floor(Math.random() * 3);
@@ -53,7 +53,7 @@ class Forca extends Component {
     
     					});
     					this.setState({traces: tempTraces});
-    					
+    					document.getElementById('guess').disabled = false;
     				});
     			});
 			});
@@ -90,8 +90,12 @@ class Forca extends Component {
 
 				// Caso não tenha havido acertos adiciona ponto negativo e chama a função de checar se o usuário perdeu
 				if (computedPoints === 0 ){
-					this.setState({mistakes: this.state.mistakes + 1, message: "você errou!"}, ()=> {this.checkStatus()});
-				    this.child.handleBoneco();
+					this.setState({mistakes: this.state.mistakes + 1, message: "você errou!"}, ()=> 
+					{
+						this.checkStatus()
+						this.child.handleBoneco();
+					});
+				   // this.child.handleBoneco();
 				    
 				}
 			}
@@ -156,10 +160,10 @@ class Forca extends Component {
             <div>
                 <Navbar onNewGame={this.handleNewGame} />
                 <h1>{this.state.dica}</h1>
-                <Hangman ref={ref => this.child = ref} />
+                <Hangman mistakes={this.state.mistakes} ref={ref => this.child = ref} />
                 <Traces word= {this.state.traces}/>
-                {this.state.isRunning &&<Message message = {this.state.message}/>}
-                 <InputBox onHandleCheckGuess = {this.handleCheckGuess} />
+                {this.state.isRunning && <Message message = {this.state.message}/>}
+                {this.state.isRunning && <InputBox onHandleCheckGuess = {this.handleCheckGuess} />}
                 {this.state.isRunning && <Used charUsed = {this.state.charUsed} />}
                 
             </div>
